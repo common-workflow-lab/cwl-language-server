@@ -1,11 +1,17 @@
 #!/usr/bin/env python
 from pylspclient.lsp_structs import CompletionList
 
-capabilities = {
-    'completionProvider': {
-        'triggerCharacters': [':'],
-    },
-}
+def initialize(params): # InitializeParams -> InitializeResult
+    return {
+        'capabilities': {
+            'completionProvider': {
+                'triggerCharacters': [':'],
+            },
+        },
+    }
+
+def initialized(params): # InitializedParams -> None
+    return
 
 def completion(params): # CompletionParams -> CompletionList
     print(params)
