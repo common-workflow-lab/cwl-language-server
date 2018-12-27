@@ -1,1 +1,2 @@
 typing-extensions
+pylspclient == 0.0.2
