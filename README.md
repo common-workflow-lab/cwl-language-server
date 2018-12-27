@@ -5,3 +5,9 @@
 # What is Language Server ?
 
 [Langserver\.org](https://langserver.org/)
+
+# How to use
+
+```
+pip install -r requirements.txt
+```
