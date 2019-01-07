@@ -49,4 +49,19 @@ None
 `CTRL-c`
 
 
+# Example: Emacs with [Eglot](https://github.com/joaotavora/eglot)
 
+- Install Eglot via package manager such as package.el
+- Configure Eglot for cwl-language-server
+  - Add the following to `init.el`:
+```elisp
+(require 'eglot)
+(add-to-list 'eglot-server-programs
+             '(cwl-mode . ("/path/to/python" "/path/to/cwl-language-server/cwl_language_server/main.py")))
+(add-hook 'cwl-mode-hook 'eglot-ensure)
+(eglot-ensure)
+```
+- Open CWL file
+- Set the cursor after `cwlVersion: `
+- `M-x completion-at-point`
+- Have fun!
