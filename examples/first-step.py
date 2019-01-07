@@ -3,9 +3,11 @@ import os
 import sys
 
 import pylspclient
-from pylspclient.lsp_structs import TextDocumentItem, Position, CompletionContext, CompletionTriggerKind
+from pylspclient.lsp_structs import TextDocumentItem, Position, CompletionContext, CompletionTriggerKind, to_type
 import cwl_language_server.callbacks as callbacks
 
+def print_response(resp):
+    print(callbacks.to_dict(resp), file=sys.stderr)
 
 if __name__ == '__main__':
     pipein, pipeout = os.pipe()
@@ -19,16 +21,14 @@ if __name__ == '__main__':
                                                'textDocument/completion': callbacks.completion,
                                            })
     client = pylspclient.LspClient(lsp_endpoint)
-    print(client.initialize(processId=None, rootPath=None, rootUri=None,
-                            initializationOptions=None, capabilities={},
-                            trace=None, workspaceFolders=None),
-          file=sys.stderr)
-    print(client.initialized(), file=sys.stderr)
-    print(client.completion(
-        TextDocumentItem(None, 'cwl', 1, ''),
-        Position(0, 0),
-        CompletionContext(CompletionTriggerKind.Invoked)),
-          file=sys.stderr)
-    client.shutdown()
-    client.exit()
+    print_response(client.initialize(processId=None, rootPath=None, rootUri=None,
+                                     initializationOptions=None, capabilities={},
+                                     trace=None, workspaceFolders=None))
+    print_response(client.initialized())
+    print_response(client.completion(
+        TextDocumentItem('echo.cwl', 'cwl', 1, ''),
+        Position(0, 7),
+        CompletionContext(CompletionTriggerKind.Invoked)))
+    print_response(client.shutdown())
+    print_response(client.exit())
     # BUG: Need ^C
