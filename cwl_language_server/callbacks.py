@@ -2,7 +2,7 @@
 import pylspclient.lsp_structs as structs
 import sys
 from linecache import getline
-
+from urllib.parse import urlparse
 
 def initialize(params): # InitializeParams -> InitializeResult
     return {
@@ -22,7 +22,7 @@ def completion(params): # CompletionParams -> CompletionList
     ctx = params['context']
     line = params['position']['line']
     col = params['position']['character']
-    uri = params['textDocument']['uri']
+    uri = urlparse(params['textDocument']['uri']).path
 
     field = getline(uri, line+1)[0:col].lstrip().rstrip(': ')
     if not field:
