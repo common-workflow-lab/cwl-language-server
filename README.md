@@ -32,6 +32,21 @@ $ PYTHONPATH=/path/to/cwl-language-server python examples/first-step.py
 PYTHONPATH=$PWD python examples/first-step.py
 ```
 
+### Expected Result
+
+Looks like this.
+
+```console
+$ python examples/first-step.py
+{'capabilities': {'completionProvider': {'triggerCharacters': [': ']}}}
+None
+{'jsonrpc': '2.0', 'method': 'initialized', 'params': {}}
+[{'label': 'draft-2', 'deprecated': True}, {'label': 'draft-3.dev1', 'deprecated': True}, {'label': 'draft-3.dev2', 'deprecated': True}, {'label': 'draft-3.dev3', 'deprecated': True}, {'label': 'draft-3.dev4', 'deprecated': True}, {'label': 'draft-3.dev5', 'deprecated': True}, {'label': 'draft-3', 'deprecated': True}, {'label': 'draft-4.dev1', 'deprecated': True}, {'label': 'draft-4.dev2', 'deprecated': True}, {'label': 'draft-4.dev3', 'deprecated': True}, {'label': 'v1.0.dev4', 'deprecated': True}, {'label': 'v1.0'}]
+```
+
 # How to stop example
 
 `CTRL-c`
+
+
+
