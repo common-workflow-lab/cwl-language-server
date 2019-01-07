@@ -6,8 +6,8 @@ import pylspclient
 import callbacks
 
 def main():
-    stdin = sys.stdout
-    stdout = sys.stdin
+    stdin = sys.stdout.buffer
+    stdout = sys.stdin.buffer
     json_rpc_endpoint = pylspclient.JsonRpcEndpoint(stdin, stdout)
     lsp_endpoint = pylspclient.LspEndpoint(json_rpc_endpoint,
                                            method_callbacks={
