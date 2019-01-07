@@ -32,7 +32,18 @@ def completion(params): # CompletionParams -> CompletionList
 
 completion_list = {
     'cwlVersion': [
-        structs.CompletionItem('v1.0')
+        structs.CompletionItem('draft-2',      deprecated=True),
+        structs.CompletionItem('draft-3.dev1', deprecated=True),
+        structs.CompletionItem('draft-3.dev2', deprecated=True),
+        structs.CompletionItem('draft-3.dev3', deprecated=True),
+        structs.CompletionItem('draft-3.dev4', deprecated=True),
+        structs.CompletionItem('draft-3.dev5', deprecated=True),
+        structs.CompletionItem('draft-3',      deprecated=True),
+        structs.CompletionItem('draft-4.dev1', deprecated=True),
+        structs.CompletionItem('draft-4.dev2', deprecated=True),
+        structs.CompletionItem('draft-4.dev3', deprecated=True),
+        structs.CompletionItem('v1.0.dev4',    deprecated=True),
+        structs.CompletionItem('v1.0'),
     ],
 }
 
