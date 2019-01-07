@@ -27,7 +27,7 @@ if __name__ == '__main__':
     print_response(client.initialized())
     print_response(client.completion(
         TextDocumentItem('echo.cwl', 'cwl', 1, ''),
-        Position(0, 7),
+        Position(1, 12),
         CompletionContext(CompletionTriggerKind.Invoked)))
     print_response(client.shutdown())
     print_response(client.exit())
