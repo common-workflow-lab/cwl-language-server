@@ -8,6 +8,12 @@
 
 # How to use
 
+```console
+$ pip install -r requirements.txt
 ```
-pip install -r requirements.txt
+
+# How to execute example
+
+```console
+$ PYTHONPATH=/path/to/cwl-language-server python examples/first-step.py
 ```
