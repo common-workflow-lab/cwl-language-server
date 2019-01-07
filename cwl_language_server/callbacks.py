@@ -31,7 +31,7 @@ def completion(params): # CompletionParams -> CompletionList
     return completion_list.get(field, structs.CompletionList(False, []))
 
 completion_list = {
-    'class': [
+    'cwlVersion': [
         structs.CompletionItem('v1.0')
     ],
 }
