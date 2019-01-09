@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 import pylspclient.lsp_structs as structs
+
+from glob import glob
+from os.path import dirname, basename
 import sys
 from linecache import getline
 from urllib.parse import urlparse
@@ -8,7 +11,7 @@ def initialize(params): # InitializeParams -> InitializeResult
     return {
         'capabilities': {
             'completionProvider': {
-                'triggerCharacters': [': '],
+                'triggerCharacters': [': ', '- '],
             },
         },
     }
@@ -28,7 +31,12 @@ def completion(params): # CompletionParams -> CompletionList
     if not field:
         return structs.CompletionList(False, [])
 
-    return completion_list.get(field, structs.CompletionList(False, []))
+    if field in completion_list:
+        return completion_list[field]
+    if field == 'run':
+        cwls = glob("{}/*.cwl".format(dirname(uri)))
+        return [structs.CompletionItem(basename(cwl)) for cwl in cwls]
+    return structs.CompletionList(False, [])
 
 completion_list = {
     'cwlVersion': [
