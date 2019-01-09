@@ -35,7 +35,7 @@ def completion(params): # CompletionParams -> CompletionList
         return completion_list[field]
     if field == 'run':
         cwls = glob("{}/*.cwl".format(dirname(uri)))
-        return [structs.CompletionItem(basename(cwl)) for cwl in cwls]
+        return [structs.CompletionItem(basename(cwl)) for cwl in cwls if cwl != uri]
     return structs.CompletionList(False, [])
 
 completion_list = {
