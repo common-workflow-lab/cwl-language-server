@@ -10,10 +10,12 @@
 
 python3
 
-# How to use
+# How to setup
 
 ```console
-$ pip install -r requirements.txt
+git clone https://github.com/common-workflow-language/cwl-language-server.git
+cd cwl-language-server
+pip install -r requirements.txt
 ```
 
 ## Install pylspclient
