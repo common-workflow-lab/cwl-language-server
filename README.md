@@ -13,7 +13,7 @@ python3
 # How to setup
 
 ```console
-git clone https://github.com/common-workflow-language/cwl-language-server.git
+git clone -b sandbox https://github.com/common-workflow-language/cwl-language-server.git
 cd cwl-language-server
 pip install -r requirements.txt
 ```
