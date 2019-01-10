@@ -5,6 +5,18 @@ import pylspclient
 
 import callbacks
 
+import logging
+from logging import getLogger, StreamHandler, Formatter
+
+logger = getLogger("CWLLSP")
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(filename="./cwl-language-server.log")
+handler_format = Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(handler_format)
+logger.addHandler(handler)
+
+logger.debug("Start CWL Language Server")
+
 def main():
     stdin = sys.stdout.buffer
     stdout = sys.stdin.buffer

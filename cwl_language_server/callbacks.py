@@ -7,6 +7,11 @@ import sys
 from linecache import getline
 from urllib.parse import urlparse
 
+import logging
+from logging import getLogger, StreamHandler, Formatter
+
+logger = getLogger("CWLLSP").getChild("callbacks")
+
 def initialize(params): # InitializeParams -> InitializeResult
     return {
         'capabilities': {
@@ -17,10 +22,12 @@ def initialize(params): # InitializeParams -> InitializeResult
     }
 
 def initialized(params): # InitializedParams -> None
+    logger.debug("Init called")
     return
 
 def completion(params): # CompletionParams -> CompletionList
-    # print('Params: ', params, file=sys.stderr)
+    logger.debug("completion called")
+    # print('completion Params: ', params, file=sys.stderr)
     params = params['params']
     ctx = params.get('context', {})
     line = params['position']['line']
