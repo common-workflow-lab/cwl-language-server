@@ -26,6 +26,9 @@ def main():
                                                'initialize': callbacks.initialize,
                                                'initialized': callbacks.initialized,
                                                'textDocument/completion': callbacks.completion,
+                                           },
+                                           notify_callbacks={
+                                               'textDocument/didChange': callbacks.didChange,
                                            })
     lsp_endpoint.start()
 

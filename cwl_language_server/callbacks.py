@@ -25,6 +25,11 @@ def initialized(params): # InitializedParams -> None
     logger.debug("Init called")
     return
 
+def didChange(params): # DidChangeTextDocumentParams -> None
+    # print('didChange Params: ', params, file=sys.stderr)
+    logger.debug("didChange called")
+    return
+
 def completion(params): # CompletionParams -> CompletionList
     logger.debug("completion called")
     # print('completion Params: ', params, file=sys.stderr)
