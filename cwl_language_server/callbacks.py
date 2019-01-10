@@ -22,7 +22,7 @@ def initialized(params): # InitializedParams -> None
 def completion(params): # CompletionParams -> CompletionList
     # print('Params: ', params, file=sys.stderr)
     params = params['params']
-    ctx = params['context']
+    ctx = params.get('context', {})
     line = params['position']['line']
     col = params['position']['character']
     uri = urlparse(params['textDocument']['uri']).path
