@@ -12,8 +12,14 @@ def main():
     lsp_endpoint = pylspclient.LspEndpoint(json_rpc_endpoint,
                                            method_callbacks={
                                                'initialize': callbacks.initialize,
-                                               'initialized': callbacks.initialized,
                                                'textDocument/completion': callbacks.completion,
+                                           },
+                                           notify_callbacks={
+                                               'initialized': callbacks.initialized,
+                                               'workspace/didChangeConfiguration': callbacks.didChangeConfiguration,
+                                               'textDocument/didOpen': callbacks.didOpen,
+                                               'textDocument/didChange': callbacks.didChange,
+                                               'textDocument/didClose': callbacks.didClose,
                                            })
     lsp_endpoint.start()
 
