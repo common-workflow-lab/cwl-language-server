@@ -4,42 +4,28 @@
 
 # What is Language Server ?
 
-[Langserver\.org](https://langserver.org/)
+For details, see [Langserver\.org](https://langserver.org/).
 
 # Requirements
 
-python3
+- Python3
+- master branch of [yeger00/pylspclient: LSP client implementation in Python](https://github.com/yeger00/pylspclient/)
 
 # How to setup
 
 ```console
-git clone -b sandbox https://github.com/common-workflow-language/cwl-language-server.git
-cd cwl-language-server
-pip install -r requirements.txt
+$ git clone https://github.com/common-workflow-language/cwl-language-server.git
+$ cd cwl-language-server
+$ pip install -r requirements.txt
 ```
-
-## Install pylspclient
-
-Currently, we must use `send-result-wip` branch of [yeger00/pylspclient: LSP client implementation in Python](https://github.com/yeger00/pylspclient/)
 
 # How to execute example
 
 ```console
-$ PYTHONPATH=/path/to/cwl-language-server python examples/first-step.py
-```
-
-## for example
-
-```
-PYTHONPATH=$PWD python examples/first-step.py
-```
-
-### Expected Result
-
-Looks like this.
-
-```console
-$ python examples/first-step.py
+$ git clone https://github.com/common-workflow-language/cwl-language-server.git
+$ cd cwl-language-server
+$ pip install -r requirements.txt
+$ PYTHONPATH=$PWD python examples/first-step.py
 {'capabilities': {'completionProvider': {'triggerCharacters': [': ']}}}
 None
 {'jsonrpc': '2.0', 'method': 'initialized', 'params': {}}
@@ -58,9 +44,8 @@ Use `CTRL-c` to exit the example.
 (add-to-list 'eglot-server-programs
              '(cwl-mode . ("/path/to/python" "/path/to/cwl-language-server/cwl_language_server/main.py")))
 (add-hook 'cwl-mode-hook 'eglot-ensure)
-(eglot-ensure)
 ```
 - Open CWL file
 - Set the cursor after `cwlVersion: `
-- `M-x completion-at-point`
+- If you installed `company.el`, possible versions are listed in the completion list. Otherwise use `M-x completion-at-point` or `M-x company-complete` by hand.
 - Have fun!
