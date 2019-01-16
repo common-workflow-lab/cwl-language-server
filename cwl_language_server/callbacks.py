@@ -92,7 +92,7 @@ def didChange(params): # DidChangeTextDocumentParams -> None
     wholetxt = CONTENTS[uri]['text']
     for ch in changes:
         txt = ch['text']
-        if ch['range'] is None:
+        if not 'range' in ch or ch['range'] is None:
             CONTENTS[uri] = {
                 'text': TextContent(txt),
                 'version': 0,
