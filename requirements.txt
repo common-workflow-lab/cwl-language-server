@@ -1,1 +1,2 @@
 typing-extensions
+git+https://github.com/yeger00/pylspclient.git@
