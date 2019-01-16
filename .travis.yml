@@ -19,8 +19,5 @@ jobs:
       python: "3.7"
       dist: xenial
 script: tox
-branches:
-  only:
-    - master
 notifications:
   email: false
