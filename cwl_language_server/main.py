@@ -19,6 +19,7 @@ server = LanguageServer()
 
 @server.feature(COMPLETION, trigger_characters=[': ', '- '])
 def completions(ls, params: CompletionParams):
+    ls.show_message_log('cwlls: Start completion...')
     ctx = params.context
     line = params.position.line
     col = params.position.character
@@ -60,24 +61,24 @@ completion_list = {
 @server.feature(TEXT_DOCUMENT_DID_CHANGE)
 def did_change(ls, params: DidChangeTextDocumentParams):
     """Text document did change notification."""
-    pass
+    ls.show_message_log('cwlls: Start didChange...')
 
 
 @server.feature(TEXT_DOCUMENT_DID_CLOSE)
-def did_close(server, params: DidCloseTextDocumentParams):
+def did_close(ls, params: DidCloseTextDocumentParams):
     """Text document did close notification."""
-    pass
+    ls.show_message_log('cwlls: Start didClose...')
 
 
 @server.feature(TEXT_DOCUMENT_DID_OPEN)
 async def did_open(ls, params: DidOpenTextDocumentParams):
     """Text document did open notification."""
-    pass
+    ls.show_message_log('cwlls: Start didOpen...')
 
 
 @server.feature(WORKSPACE_DID_CHANGE_CONFIGURATION)
 def did_change_configuration(ls, params: DidChangeConfigurationParams):
-    pass
+    ls.show_message_log('cwlls: Start didChangeConfiguration...')
 
 
 if __name__ == '__main__':
