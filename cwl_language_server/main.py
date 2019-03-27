@@ -3,6 +3,8 @@
 from glob import glob
 from os.path import dirname, basename
 from urllib.parse import urlparse
+import re
+import subprocess
 
 from pygls.server import LanguageServer
 from pygls.features import (COMPLETION, TEXT_DOCUMENT_DID_CHANGE,
@@ -13,6 +15,7 @@ from pygls.types import (CompletionItem, CompletionList, CompletionParams,
                          DidChangeTextDocumentParams,
                          DidCloseTextDocumentParams, DidOpenTextDocumentParams,
                          Position, Range, DidChangeConfigurationParams)
+from pygls.workspace import Document
 
 server = LanguageServer()
 
@@ -62,6 +65,8 @@ completion_list = {
 def did_change(ls, params: DidChangeTextDocumentParams):
     """Text document did change notification."""
     ls.show_message_log('cwlls: Start didChange...')
+    ds = validate(ls, ls.workspace.get_document(params.textDocument.uri))
+    ls.publish_diagnostics(params.textDocument.uri, ds)
 
 
 @server.feature(TEXT_DOCUMENT_DID_CLOSE)
@@ -79,6 +84,43 @@ async def did_open(ls, params: DidOpenTextDocumentParams):
 @server.feature(WORKSPACE_DID_CHANGE_CONFIGURATION)
 def did_change_configuration(ls, params: DidChangeConfigurationParams):
     ls.show_message_log('cwlls: Start didChangeConfiguration...')
+
+
+def validate(ls, doc: Document):
+    cwl_schema = '/path/to/schema.yml'
+    # cwl_schema = '/Users/tom-tan/repos/common-workflow-language/v1.0/CommonWorkflowLanguage.yml'
+    fname = doc.uri.replace('file://', '')
+    cmd = ['schema-salad-tool', cwl_schema, fname, '--print-oneline']
+    ret = subprocess.run(cmd, stderr=subprocess.PIPE)
+    if ret.returncode != 0:
+        output = ret.stderr.decode()
+
+        ds = []
+        for l in output.splitlines()[2:]:
+            d = str2diagnostic(l, doc)
+            if d:
+                ds.append(d)
+
+        return ds
+    else:
+        return []
+
+
+def str2diagnostic(s, doc):
+    pat = re.compile("^.+?:(\d+):(\d+): (.+)$")
+    match = pat.match(s)
+    if match:
+        line, column, msg = match.groups()
+        line = int(line)
+        column = int(column)
+        return Diagnostic(range = Range(Position(line = line-1,
+                                                 character = column-1),
+                                        Position(line = line-1,
+                                                 character = column)),
+                          message = msg,
+                          source = 'cwlls')
+    else:
+        return None
 
 
 if __name__ == '__main__':
