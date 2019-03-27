@@ -1,2 +1,2 @@
 typing-extensions
-git+https://github.com/yeger00/pylspclient.git@
+git+https://github.com/openlawlibrary/pygls.git@
