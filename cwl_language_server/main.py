@@ -17,6 +17,8 @@ from pygls.types import (CompletionItem, CompletionList, CompletionParams,
                          Position, Range, DidChangeConfigurationParams)
 from pygls.workspace import Document
 
+from v1_0 import SchemaSaladException, ValidationException, load_document_by_string, load_document
+
 server = LanguageServer()
 
 
@@ -87,23 +89,31 @@ def did_change_configuration(ls, params: DidChangeConfigurationParams):
 
 
 def validate(ls, doc: Document):
-    cwl_schema = '/path/to/schema.yml'
-    # cwl_schema = '/Users/tom-tan/repos/common-workflow-language/v1.0/CommonWorkflowLanguage.yml'
     fname = doc.uri.replace('file://', '')
-    cmd = ['schema-salad-tool', cwl_schema, fname, '--print-oneline']
-    ret = subprocess.run(cmd, stderr=subprocess.PIPE)
-    if ret.returncode != 0:
-        output = ret.stderr.decode()
+    try:
+        # ret = load_document(fname, doc.uri)
+        _ = load_document_by_string(doc.source, doc.uri)
+    except ValidationException as e:
+        str(e)
+    return []
+    # we should use the following instead of `load_document`
+    # load_document_by_string(doc, doc.uri)
+    # cwl_schema = '/path/to/schema.yml'
+    # cwl_schema = '/Users/tom-tan/repos/common-workflow-language/v1.0/CommonWorkflowLanguage.yml'
+    # cmd = ['schema-salad-tool', cwl_schema, fname, '--print-oneline']
+    # ret = subprocess.run(cmd, stderr=subprocess.PIPE)
+    # if ret.returncode != 0:
+    #     output = ret.stderr.decode()
 
-        ds = []
-        for l in output.splitlines()[2:]:
-            d = str2diagnostic(l, doc)
-            if d:
-                ds.append(d)
+    #     ds = []
+    #     for l in output.splitlines()[2:]:
+    #         d = str2diagnostic(l, doc)
+    #         if d:
+    #             ds.append(d)
 
-        return ds
-    else:
-        return []
+    #     return ds
+    # else:
+    #     return []
 
 
 def str2diagnostic(s, doc):
