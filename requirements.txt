@@ -1,2 +1,2 @@
 typing-extensions
-git+https://github.com/openlawlibrary/pygls.git@
+git+https://github.com/openlawlibrary/pygls.git@master
